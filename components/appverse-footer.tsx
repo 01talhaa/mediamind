@@ -15,7 +15,7 @@ interface FooterContent {
 
 const defaultContent: FooterContent = {
   tagline: "Experience software development and creative excellence like never before. We craft innovative solutions for brands and businesses.",
-  copyright: "© 2025 — PixelPrimp",
+  copyright: "© 2025 — MediaMind",
 }
 
 export function AppverseFooter() {
@@ -80,7 +80,7 @@ export function AppverseFooter() {
                     loop={true}
                     muted={true}
                     playsInline={true}
-                    aria-label="PixelPrimp app preview - approvals made easy"
+                    aria-label="MediaMind app preview - social media growth made easy"
                   />
                   {/* On-screen content */}
                   <div className="relative p-3">
@@ -107,7 +107,7 @@ export function AppverseFooter() {
             {/* Brand */}
             <div className="space-y-3">
               <div className="flex items-center gap-1.5">
-                <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={24} height={24} className="h-6 w-6" />
+                <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={24} height={24} className="h-6 w-6" />
                 <span className="text-xl font-semibold">
                   <span className="text-[#008CE2]">Pixel</span>
                   <span className="text-[#F4F7F5]">Primp</span>
@@ -136,11 +136,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Twitter className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://twitter.com/pixelprimp"
+                      href="https://twitter.com/mediamind"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Twitter"
+                      aria-label="Follow MediaMind on Twitter"
                     >
                       X/Twitter
                     </a>
@@ -148,11 +148,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Youtube className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://www.youtube.com/@pixelprimp"
+                      href="https://www.youtube.com/@mediamind"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Subscribe to PixelPrimp on YouTube"
+                      aria-label="Subscribe to MediaMind on YouTube"
                     >
                       YouTube
                     </a>
@@ -160,11 +160,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Instagram className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://instagram.com/pixelprimp"
+                      href="https://instagram.com/mediamind"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Instagram"
+                      aria-label="Follow MediaMind on Instagram"
                     >
                       Instagram
                     </a>
@@ -172,11 +172,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <MessageCircle className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://threads.com/pixelprimp"
+                      href="https://threads.com/mediamind"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Threads"
+                      aria-label="Follow MediaMind on Threads"
                     >
                       Threads
                     </a>

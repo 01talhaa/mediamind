@@ -5,14 +5,14 @@ export default function AboutPage() {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PixelPrimp Studio",
-    url: "https://pixelprimp.com",
-    logo: "https://pixelprimp.com/logo.png",
+    name: "MediaMind",
+    url: "https://mediamind.com",
+    logo: "https://mediamind.com/logo.png",
     description:
-      "PixelPrimp is a complete software development and creative studio offering web/mobile development, 3D animation, video editing, photo editing, and graphic design services worldwide.",
+      "MediaMind is a leading social media growth agency offering Instagram followers, Facebook likes, YouTube views, TikTok engagement, and complete social media management services worldwide.",
     sameAs: [
-      "https://www.instagram.com/pixelprimp",
-      "https://www.linkedin.com/company/pixelprimp",
+      "https://www.instagram.com/mediamind",
+      "https://www.linkedin.com/company/mediamind",
     ],
     address: {
       "@type": "PostalAddress",

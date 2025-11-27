@@ -16,16 +16,16 @@ export function Hero() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center justify-center py-14 sm:py-20">
           <div className="mb-5 flex items-center gap-2 animate-fade-in">
-            <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={32} height={32} className="h-8 w-8 animate-float" />
+            <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-8 animate-float" />
             <p className="text-sm uppercase tracking-[0.25em]">
-              <span className="text-[#008CE2]">Pixel</span>
-              <span className="text-[#F4F7F5]">Primp</span>
+              <span className="text-[#008CE2]">Media</span>
+              <span className="text-[#F4F7F5]">Mind</span>
             </p>
           </div>
           <h1 className="mt-3 text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-[#F4F7F5] animate-fade-in-up delay-100">
-            <span className="block">SOFTWARE &</span>
-            <span className="block text-[#008CE2] drop-shadow-[0_0_30px_rgba(0,140,226,0.5)]">CREATIVE STUDIO</span>
-            <span className="block">FOR DIGITAL EXCELLENCE</span>
+            <span className="block">SOCIAL MEDIA</span>
+            <span className="block text-[#008CE2] drop-shadow-[0_0_30px_rgba(0,140,226,0.5)]">GROWTH AGENCY</span>
+            <span className="block">BOOST YOUR PRESENCE</span>
           </h1>
           <div className="mt-6 animate-scale-in delay-300">{buttonNew}</div>
 
@@ -94,37 +94,37 @@ function PhoneCard({
 
 const phoneData = [
   {
-    title: "Conversions",
-    sub: "Turn clicks into paying customers.",
-    tone: "results",
+    title: "10K+",
+    sub: "Instagram followers delivered daily.",
+    tone: "growth",
     gradient: "from-[#0b0b0b] via-[#0f172a] to-[#020617]",
     videoSrc:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A%20new%20chapter%20in%20the%20story%20of%20success.__Introducing%20the%20new%20TAG%20Heuer%20Carrera%20Day-Date%20collection%2C%20reimagined%20with%20bold%20colors%2C%20refined%20finishes%2C%20and%20upgraded%20functionality%20to%20keep%20you%20focused%20on%20your%20goals.%20__Six%20-nDNoRQyFaZ8oaaoty4XaQz8W8E5bqA.mp4",
   },
   {
-    title: "Speed",
-    sub: "Launch in days, not weeks.",
-    tone: "speed",
+    title: "Real Engagement",
+    sub: "Authentic likes and comments.",
+    tone: "authentic",
     gradient: "from-[#0b1a0b] via-[#052e16] to-[#022c22]",
   },
   {
-    title: "Social-Ready",
-    sub: "Made for IG, TikTok, and Meta.",
-    tone: "social",
+    title: "YouTube Views",
+    sub: "Boost your video reach instantly.",
+    tone: "views",
     gradient: "from-[#001028] via-[#0b355e] to-[#052e5e]",
     videoSrc:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Timeline%201-Ku3Y2Hgaw8hCiFEFg1ELtYp631rSzR.webm",
   },
   {
-    title: "Standout",
-    sub: "Be the product no one scrolls past.",
-    tone: "standout",
+    title: "TikTok Viral",
+    sub: "Get the algorithm on your side.",
+    tone: "viral",
     gradient: "from-[#0b0b0b] via-[#1f2937] to-[#0b1220]",
   },
   {
-    title: "Premium",
-    sub: "Look like the market leader.",
-    tone: "premium",
+    title: "24/7 Support",
+    sub: "Always here to help you grow.",
+    tone: "support",
     gradient: "from-[#0b0b0b] via-[#111827] to-[#052e16]",
   },
 ]

@@ -9,13 +9,13 @@ import { Toaster } from "@/components/ui/sonner"
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pixelprimp.com'),
+  metadataBase: new URL('https://mediamind.com'),
   title: {
-    default: "PixelPrimp | Software Development & Creative Studio | Web, Mobile, Video & Photo Editing",
-    template: "%s | PixelPrimp"
+    default: "MediaMind | Social Media Growth Agency | Followers, Likes, Views & Engagement",
+    template: "%s | MediaMind"
   },
   description:
-    "PixelPrimp - Your complete software development and creative studio in Bangladesh. We offer web/mobile development, 3D animation, video editing, photo editing, and graphic design. From code to creativity, we handle it all. Affordable pricing starting ৳8,500.",
+    "MediaMind - Your trusted social media growth partner. We provide authentic Instagram followers, Facebook likes, YouTube views, TikTok engagement, and complete social media management services. Boost your online presence with real results.",
   keywords: [
     // Company & Location
     "software development company Bangladesh",

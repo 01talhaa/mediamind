@@ -18,10 +18,10 @@ export default function Page() {
   const pricingStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebPageElement",
-    "@id": "https://pixelprimp.com/#pricing",
+    "@id": "https://mediamind.com/#pricing",
     name: "Pricing Plans",
-    description: "Software development and creative services pricing plans including web/mobile development, video editing, photo editing, and 3D animation",
-    url: "https://pixelprimp.com/#pricing",
+    description: "Social media growth services pricing plans including Instagram followers, Facebook likes, YouTube views, TikTok engagement, and social media management",
+    url: "https://mediamind.com/#pricing",
     mainEntity: {
       "@type": "PriceSpecification",
       name: "Software Development Services",
