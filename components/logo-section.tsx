@@ -7,18 +7,18 @@ export function LogoSection() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center text-center">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center rounded-full bg-gradient-to-r from-purple-600/20 to-purple-500/20 border border-purple-500/30 px-4 py-2 text-sm font-medium text-purple-300">
-            Our Clients
+          <div className="mb-6 inline-flex items-center rounded-full bg-gradient-to-r from-[#008CE2]/20 to-[#06B9D0]/20 border border-[#008CE2]/30 px-4 py-2 text-sm font-medium text-[#008CE2]">
+            Success Stories
           </div>
 
           {/* Heading */}
-          <h2 className="mb-4 bg-gradient-to-r from-purple-400 via-purple-300 to-purple-500 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl md:text-6xl">
-            Over 100+ company
+          <h2 className="mb-4 bg-gradient-to-r from-[#008CE2] via-[#06B9D0] to-[#0EA5E9] bg-clip-text text-4xl font-bold text-transparent sm:text-5xl md:text-6xl">
+            50,000+ satisfied clients
           </h2>
 
           {/* Subtitle */}
           <p className="mb-12 max-w-2xl text-lg text-neutral-400 sm:text-xl">
-            Helping you to protect all your digital activity and data
+            From micro-influencers to major brands, we've helped thousands grow their social media presence authentically
           </p>
 
           {/* Logo Grid */}

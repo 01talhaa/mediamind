@@ -64,12 +64,12 @@ export function LogoMarquee() {
         {/* Header */}
         <div className="flex flex-col items-center justify-between mb-12 sm:flex-row sm:items-center">
           <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl text-center sm:text-left">
-            Meet our <span className="text-lime-300">top-tier</span>
+            Trusted by <span className="text-[#008CE2]">influencers</span>
             <br />
-            customers
+            &amp; brands worldwide
           </h2>
-          <Button variant="outline" className="mt-4 sm:mt-0 liquid-glass hover:liquid-glass-enhanced bg-transparent">
-            Learn More
+          <Button variant="outline" className="mt-4 sm:mt-0 liquid-glass hover:liquid-glass-enhanced bg-transparent hover:border-[#008CE2] hover:text-[#008CE2]">
+            View Case Studies
           </Button>
         </div>
 

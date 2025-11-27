@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue gradient circle background -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E90FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#gradient)"/>
+  
+  <!-- White M letter -->
+  <path d="M 170 320 L 170 190 L 220 280 L 256 220 L 292 280 L 342 190 L 342 320 L 310 320 L 310 250 L 256 330 L 202 250 L 202 320 Z" fill="white"/>
+  
+  <!-- Social media icons overlay -->
+  <!-- Like icon (top right) -->
+  <circle cx="380" cy="140" r="28" fill="#FF3B5C"/>
+  <path d="M 380 132 L 384 128 C 387 125 392 125 395 128 C 398 131 398 136 395 139 L 380 154 L 365 139 C 362 136 362 131 365 128 C 368 125 373 125 376 128 Z" fill="white"/>
+  
+  <!-- Thumb up (right) -->
+  <circle cx="400" cy="180" r="22" fill="#4267B2"/>
+  <path d="M 400 172 L 404 168 L 404 184 L 396 184 L 396 176 L 400 172 Z" fill="white"/>
+  
+  <!-- Message icon (top right small) -->
+  <circle cx="370" cy="110" r="18" fill="#00B2FF"/>
+  <rect x="364" y="105" width="12" height="8" rx="2" fill="white"/>
+  
+  <!-- Additional small circles -->
+  <circle cx="410" cy="210" r="12" fill="#FF8DA1" opacity="0.7"/>
+  <circle cx="395" cy="155" r="10" fill="#B4D4FF" opacity="0.6"/>
+</svg>

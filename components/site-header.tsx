@@ -80,10 +80,10 @@ export function SiteHeader() {
 
   const links = [
     { href: "/", label: "Home", icon: Briefcase },
-    { href: "/services", label: "Growth Services", icon: Wrench },
-    { href: "/projects", label: "Case Studies", icon: FolderOpen },
-    { href: "/team", label: "Our Team", icon: Users },
-    { href: "#pricing", label: "Packages", icon: Tag },
+    { href: "/services", label: "Packages", icon: Wrench },
+    // { href: "/projects", label: "Case Studies", icon: FolderOpen },
+    // { href: "/team", label: "Our Team", icon: Users },
+    // { href: "#pricing", label: "Packages", icon: Tag },
     { href: "faq", label: "FAQ", icon: HelpCircle },
   ]
 
@@ -92,9 +92,9 @@ export function SiteHeader() {
       <div className="container mx-auto max-w-4xl">
         <div className="flex h-14 items-center justify-between px-6 liquid-glass-header rounded-full shadow-md shadow-[#008CE2]/30">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-1.5 hover:scale-105 transition-transform duration-300">
-            <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={20} height={20} className="h-5 w-5" />
-            <span className="font-semibold tracking-wide">
+          <Link href="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
+            <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
+            <span className="font-bold tracking-wide text-xl">
               <span className="text-[#008CE2]">Media</span>
               <span className="text-[#F4F7F5]">Mind</span>
             </span>
@@ -174,7 +174,7 @@ export function SiteHeader() {
               <SheetContent side="right" className="liquid-glass border-[#1F2329] p-0 w-64 flex flex-col bg-[#0F1113]/95">
                 {/* Brand Header */}
                 <div className="flex items-center gap-1.5 px-4 py-4 border-b border-[#1F2329]">
-                  <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={24} height={24} className="h-6 w-6" />
+                  <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
                   <span className="font-semibold tracking-wide text-lg">
                     <span className="text-[#008CE2]">Pixel</span>
                     <span className="text-[#F4F7F5]">Primp</span>

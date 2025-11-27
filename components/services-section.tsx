@@ -53,9 +53,9 @@ export function ServicesSection() {
   return (
     <section id="services" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-[#08090A] via-[#0F1113] to-[#08090A]">
       <div className="mb-12 text-center animate-fade-in-up">
-        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-[#F4F7F5] sm:text-5xl">Our <span className="text-[#008CE2]">Services</span></h2>
+        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-[#F4F7F5] sm:text-5xl">Social Media <span className="text-[#008CE2]">Growth Services</span></h2>
         <p className="mx-auto max-w-2xl text-lg text-[#F4F7F5]/80">
-          From concept to completion, we deliver premium creative solutions that drive results
+          Authentic engagement, real followers, and measurable results across all major platforms
         </p>
       </div>
 

@@ -115,10 +115,10 @@ export function Pricing() {
             Our Pricing and Packages
           </div>
           <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-black" itemProp="name">
-            Our Pricing.
+            Growth Packages
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-sm text-gray-600" itemProp="description">
-            No hidden fees. Just world-class animation that fits your budget.
+            Transparent pricing. Real results. Choose the perfect package for your social media goals.
           </p>
           <div className="mt-6">
             <Button

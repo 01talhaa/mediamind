@@ -58,13 +58,12 @@ export function AppverseFooter() {
           <div className="relative grid items-center gap-8 md:grid-cols-2">
             {/* Left copy */}
             <div>
-              <p className="mb-2 text-[11px] tracking-widest text-[#008CE2]">STREAMLINE YOUR WORKFLOW</p>
+              <p className="mb-2 text-[11px] tracking-widest text-[#008CE2]">GROW SMARTER, NOT HARDER</p>
               <h3 className="text-2xl font-bold leading-tight text-[#F4F7F5] sm:text-3xl">
-                Review &amp; approve projects from anywhere
+                Track your social growth in real-time
               </h3>
               <p className="mt-2 max-w-prose text-sm text-[#F4F7F5]/80">
-                Track progress, leave feedback, and approve deliverables from anywhere. Using our collaboration &amp;
-                project management tools
+                Monitor followers, engagement rates, and campaign performance from anywhere. Stay on top of your social media success with our advanced analytics dashboard.
               </p>
             </div>
 
@@ -84,12 +83,12 @@ export function AppverseFooter() {
                   />
                   {/* On-screen content */}
                   <div className="relative p-3">
-                    <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-sky-300/40" />
+                    <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-[#008CE2]/40" />
                     <div className="space-y-1 px-1">
-                      <div className="text-5xl font-extrabold text-sky-500 drop-shadow-lg">Collaboration Made Easy</div>
-                      <p className="text-xs text-white drop-shadow">From concept to delivery in a single flow</p>
-                      <div className="mt-3 inline-flex items-center rounded-full bg-sky-500/90 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white">
-                        Zero Hassle
+                      <div className="text-5xl font-extrabold text-[#008CE2] drop-shadow-lg">Growth Analytics</div>
+                      <p className="text-xs text-white drop-shadow">Real-time insights for every platform</p>
+                      <div className="mt-3 inline-flex items-center rounded-full bg-[#008CE2]/90 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white">
+                        Live Dashboard
                       </div>
                     </div>
                   </div>
@@ -107,10 +106,10 @@ export function AppverseFooter() {
             {/* Brand */}
             <div className="space-y-3">
               <div className="flex items-center gap-1.5">
-                <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={24} height={24} className="h-6 w-6" />
+                <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
                 <span className="text-xl font-semibold">
-                  <span className="text-[#008CE2]">Pixel</span>
-                  <span className="text-[#F4F7F5]">Primp</span>
+                  <span className="text-[#008CE2]">Media</span>
+                  <span className="text-[#F4F7F5]">Mind</span>
                 </span>
               </div>
               <p className="max-w-sm text-sm text-[#F4F7F5]/70">{content.tagline}</p>
@@ -119,15 +118,14 @@ export function AppverseFooter() {
             {/* Navigation */}
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-2">
               <div>
-                <h5 className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#F4F7F5]/70">Navigation</h5>
+                <h5 className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#F4F7F5]/70">Quick Links</h5>
                 <ul className="space-y-2 text-sm text-[#F4F7F5]/80">
-                  {["Home", "Features", "Testimonials", "Pricing", "Blog", "Download"].map((item) => (
-                    <li key={item}>
-                      <Link href={`#${item.toLowerCase()}`} className="hover:text-sky-500 transition-colors">
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
+                  <li><Link href="/" className="hover:text-[#008CE2] transition-colors">Home</Link></li>
+                  <li><Link href="/services" className="hover:text-[#008CE2] transition-colors">Growth Services</Link></li>
+                  <li><Link href="/projects" className="hover:text-[#008CE2] transition-colors">Case Studies</Link></li>
+                  <li><Link href="/#pricing" className="hover:text-[#008CE2] transition-colors">Packages</Link></li>
+                  <li><Link href="/faq" className="hover:text-[#008CE2] transition-colors">FAQ</Link></li>
+                  <li><Link href="/About" className="hover:text-[#008CE2] transition-colors">About Us</Link></li>
                 </ul>
               </div>
               <div>

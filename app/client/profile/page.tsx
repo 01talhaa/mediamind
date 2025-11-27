@@ -232,7 +232,7 @@ export default function ClientProfilePage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
                       <Link href="/" className="flex items-center gap-1.5 hover:scale-105 transition-transform duration-300">
-            <Image src="/icons/pqrix-white.svg" alt="MediaMind logo" width={20} height={20} className="h-5 w-5" />
+            <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
             <span className="font-semibold tracking-wide">
               <span className="text-[#008CE2]">Pixel</span>
               <span className="text-[#F4F7F5]">Primp</span>

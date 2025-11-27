@@ -432,17 +432,17 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/pqrix-icon.svg", type: "image/svg+xml" },
-      { url: "/icons/pqrix-icon.svg", sizes: "32x32", type: "image/svg+xml" },
-      { url: "/icons/pqrix-icon.svg", sizes: "16x16", type: "image/svg+xml" },
+      { url: "/mediamind-logo.svg", type: "image/svg+xml" },
+      { url: "/mediamind-logo.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/mediamind-logo.svg", sizes: "16x16", type: "image/svg+xml" },
     ],
     apple: [
-      { url: "/icons/pqrix-icon.svg", sizes: "180x180", type: "image/svg+xml" },
+      { url: "/mediamind-logo.svg", sizes: "180x180", type: "image/svg+xml" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "/icons/pqrix-white.svg",
+        url: "/mediamind-logo.svg",
       },
     ],
   },
