@@ -13,84 +13,97 @@ export default function FAQPage() {
                 <header className="space-y-4">
                   <h1 className="text-4xl font-bold tracking-tight text-[#008CE2]">Frequently Asked Questions</h1>
                   <p className="text-[#F4F7F5]/70 text-lg">
-                    Everything you need to know about our social media growth services.
+                    Answers to common questions we get from brands about 3D animation and rendering for products.
                   </p>
                 </header>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">
-                    1. Are the followers and engagement real?
+                    1. What types of products can you animate or render?
                   </h2>
                   <p className="text-[#F4F7F5]/80">
-                    Yes! We only provide 100% authentic followers, likes, and engagement from real, active users. No bots, no fake accounts. Our methods comply with all platform guidelines.
+                    We can create photorealistic 3D animations and renders for almost any product — from beauty and
+                    skincare to electronics, furniture, and luxury goods. If it exists (or is planned), we can bring it
+                    to life.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">2. How long does it take to see results?</h2>
+                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">2. How long does a typical 3D animation take?</h2>
                   <p className="text-[#F4F7F5]/80">
-                    Most services start delivering within 24-48 hours. Full delivery times vary by package, but you'll typically see complete results within 3-7 days for follower packages and 1-3 days for engagement services.
+                    Timelines vary depending on complexity, but a standard 15–20 second animation usually takes 7–14
+                    working days after final concept approval.
                   </p>
                 </section>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">
-                    3. Is it safe? Will my account get banned?
+                    3. Do you work with existing CAD files or need product samples?
                   </h2>
                   <p className="text-[#F4F7F5]/80">
-                    Absolutely safe! We use organic growth strategies that are fully compliant with Instagram, Facebook, YouTube, and TikTok guidelines. We've served over 50,000 clients with zero account issues.
+                    We can work with both. If you have CAD or 3D models, we can import and refine them. If not, we can
+                    create models from physical product samples or detailed reference images.
                   </p>
                 </section>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">4. How do you price your services?</h2>
                   <p className="text-[#F4F7F5]/80">
-                    Pricing is based on the quantity and type of service. We offer packages for all budgets, from starter plans to enterprise solutions. You can view our detailed pricing on our{" "}
-                    <a href="/#pricing" className="text-[#008CE2] underline hover:text-[#06B9D0] transition-colors duration-300">
-                      packages page
+                    Pricing is based on animation length, complexity, number of renders, and modeling requirements. You
+                    can view our detailed pricing on our{" "}
+                    <a href="/pricing" className="text-[#008CE2] underline hover:text-[#06B9D0] transition-colors duration-300">
+                      pricing page
                     </a>
                     .
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">5. Do you offer refunds or guarantees?</h2>
+                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">5. Can we request changes after delivery?</h2>
                   <p className="text-[#F4F7F5]/80">
-                    Yes! We offer a 30-day refill guarantee. If followers drop, we'll replace them free of charge. We also offer a money-back guarantee if you're not satisfied with the service.
+                    Yes. All revisions are covered under our{" "}
+                    <a href="/revisions" className="text-[#008CE2] underline hover:text-[#06B9D0] transition-colors duration-300">
+                      revision policy
+                    </a>
+                    , which ensures smooth updates without unexpected scope creep.
                   </p>
                 </section>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">
-                    6. Which platforms do you support?
+                    6. Will the renders match our brand's visual style?
                   </h2>
                   <p className="text-[#F4F7F5]/80">
-                    We provide growth services for Instagram, Facebook, YouTube, TikTok, Twitter, LinkedIn, and more. We specialize in the major platforms where engagement matters most.
+                    Absolutely. We customize lighting, materials, camera angles, and animation pacing to fit your
+                    brand’s identity and marketing needs.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">7. Do I need to provide my password?</h2>
+                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">7. What formats do you deliver in?</h2>
                   <p className="text-[#F4F7F5]/80">
-                    Never! We only need your username or profile link. We never ask for passwords or sensitive account information. Your security is our top priority.
-                  </p>
-                </section>
-
-                <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">
-                    8. Can you help with content strategy too?
-                  </h2>
-                  <p className="text-[#F4F7F5]/80">
-                    Yes! Our premium packages include full social media management with content creation, posting schedules, engagement strategies, and analytics reporting.
+                    We typically deliver in MP4 (H.264) for videos and high-resolution PNG/JPG for stills. Other formats
+                    like MOV, ProRes, or transparent-background renders are available on request.
                   </p>
                 </section>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">
-                    9. What payment methods do you accept?
+                    8. Can you handle large-scale projects or bulk renders?
                   </h2>
                   <p className="text-[#F4F7F5]/80">
-                    We accept all major credit cards, PayPal, cryptocurrency, and local payment methods including bKash and Nagad for Bangladesh customers.
+                    Yes, we regularly work on bulk orders for 10+ animations or 50+ renders. We optimize workflows to
+                    maintain quality and meet tight deadlines.
+                  </p>
+                </section>
+
+                <section className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-[#F4F7F5]">
+                    9. Do you offer creative direction or only technical execution?
+                  </h2>
+                  <p className="text-[#F4F7F5]/80">
+                    We do both. Our team can develop creative concepts, storyboards, and camera moves, or simply execute
+                    your pre-approved vision.
                   </p>
                 </section>
 
@@ -98,10 +111,10 @@ export default function FAQPage() {
                   <h2 className="text-2xl font-semibold text-[#F4F7F5]">10. How do we get started?</h2>
                   <p className="text-[#F4F7F5]/80">
                     Simply{" "}
-                    <a href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20your%20services" className="text-[#008CE2] underline hover:text-[#06B9D0] transition-colors duration-300">
-                      contact us on WhatsApp
+                    <a href="/contact" className="text-[#008CE2] underline hover:text-[#06B9D0] transition-colors duration-300">
+                      contact us
                     </a>{" "}
-                    or choose a package from our pricing section. We'll guide you through the simple order process.
+                    with your project details, references, and timeline. We'll provide a proposal and next steps.
                   </p>
                 </section>
               </div>

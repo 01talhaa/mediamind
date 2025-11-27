@@ -11,8 +11,8 @@ interface FeaturesContent {
 }
 
 const defaultContent: FeaturesContent = {
-  title: "What makes us the best creative studio for you.",
-  subtitle: "Discover our unique approach to software development and creative production",
+  title: "Why Brands Trust MediaMind for Social Growth",
+  subtitle: "Real results, authentic engagement, and proven strategies that scale",
 }
 
 export function Features() {
@@ -43,8 +43,8 @@ export function Features() {
         {/* Adaptability Card - Hidden on mobile */}
         <Card className="hidden md:block liquid-glass border border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20 hover:shadow-xl hover:shadow-[#06B9D0]/30 transition-all duration-300 hover:scale-[1.02] animate-fade-in-up delay-200">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-[#008CE2]">ADAPTABILITY</p>
-            <CardTitle className="mt-1 text-xl text-[#F4F7F5]">Make the experience truly intuitive</CardTitle>
+            <p className="text-[11px] tracking-widest text-[#008CE2]">AUTHENTIC GROWTH</p>
+            <CardTitle className="mt-1 text-xl text-[#F4F7F5]">Real followers, real engagement, real results</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
@@ -75,9 +75,9 @@ export function Features() {
         {/* Client Love Card - Always visible */}
         <Card className="liquid-glass border border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20 hover:shadow-xl hover:shadow-[#06B9D0]/30 transition-all duration-300 hover:scale-[1.02] animate-fade-in-up delay-300">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-[#008CE2]">CLIENT LOVE</p>
+            <p className="text-[11px] tracking-widest text-[#008CE2]">CLIENT SUCCESS</p>
             <CardTitle className="mt-1 text-xl text-[#F4F7F5]">
-              Their work didn't just look good, it moved the needle — our audience felt the difference instantly.
+              MediaMind helped us grow from 5K to 100K followers in 3 months. The engagement is real and our sales skyrocketed!
             </CardTitle>
           </CardHeader>
           <CardContent>

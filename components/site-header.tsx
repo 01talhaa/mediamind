@@ -80,10 +80,10 @@ export function SiteHeader() {
 
   const links = [
     { href: "/", label: "Home", icon: Briefcase },
-    { href: "/services", label: "Services", icon: Wrench },
-    { href: "/projects", label: "Projects", icon: FolderOpen },
-    { href: "/team", label: "Team", icon: Users },
-    { href: "#pricing", label: "Pricing", icon: Tag },
+    { href: "/services", label: "Growth Services", icon: Wrench },
+    { href: "/projects", label: "Case Studies", icon: FolderOpen },
+    { href: "/team", label: "Our Team", icon: Users },
+    { href: "#pricing", label: "Packages", icon: Tag },
     { href: "faq", label: "FAQ", icon: HelpCircle },
   ]
 

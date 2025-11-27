@@ -14,7 +14,7 @@ interface FooterContent {
 }
 
 const defaultContent: FooterContent = {
-  tagline: "Experience software development and creative excellence like never before. We craft innovative solutions for brands and businesses.",
+  tagline: "Grow your social media presence with authentic followers, engagement, and results. We help brands and influencers dominate social platforms.",
   copyright: "© 2025 — MediaMind",
 }
 
