@@ -49,6 +49,9 @@ interface Inquiry {
   updatedAt: string
   adminNotes?: string
   notes?: string
+  paymentScreenshot?: string
+  paymentMethod?: 'bkash' | 'nagad' | 'bank' | 'other'
+  transactionId?: string
   statusHistory?: Array<{
     status: string
     changedBy: string
@@ -218,13 +221,22 @@ export default function AdminInquiriesPage() {
     const StatusIcon = statusIcons[inquiry.status] || Clock
     const client = inquiry.clientId
 
+    // Debug logging
+    console.log('Admin inquiry card:', {
+      id: inquiry._id,
+      hasScreenshot: !!inquiry.paymentScreenshot,
+      screenshotUrl: inquiry.paymentScreenshot,
+      paymentMethod: inquiry.paymentMethod,
+      transactionId: inquiry.transactionId
+    })
+
     return (
       <Card className="border-[#1F2329] bg-[#0F1113]/80 shadow-lg shadow-[#008CE2]/20 hover:shadow-xl hover:shadow-[#06B9D0]/30 hover:scale-[1.02] transition-all duration-300 animate-fade-in-up">
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <CardTitle className="text-lg text-[#F4F7F5] mb-2">{inquiry.serviceName}</CardTitle>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge className={statusColors[inquiry.status]}>
                   <StatusIcon className={`h-3 w-3 mr-1 ${inquiry.status === 'in-progress' ? 'animate-spin' : ''}`} />
                   {inquiry.status.toUpperCase().replace('-', ' ')}
@@ -232,6 +244,12 @@ export default function AdminInquiriesPage() {
                 <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'}>
                   {inquiry.paymentStatus.toUpperCase()}
                 </Badge>
+                {inquiry.paymentScreenshot && (
+                  <Badge className="bg-green-500/10 text-green-600 border-green-500/30">
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                    Payment Proof
+                  </Badge>
+                )}
               </div>
               <p className="text-sm font-mono text-[#F4F7F5]/70">Invoice: {inquiry.invoiceNumber}</p>
             </div>
@@ -293,27 +311,73 @@ export default function AdminInquiriesPage() {
                   View
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+              <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0F1113] border-[#1F2329]">
                 <DialogHeader>
-                  <DialogTitle>Inquiry Details</DialogTitle>
-                  <DialogDescription>Complete information and status history</DialogDescription>
+                  <DialogTitle className="text-[#F4F7F5]">Inquiry Details</DialogTitle>
+                  <DialogDescription className="text-[#F4F7F5]/70">Complete information and status history</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold mb-2">Message</h4>
-                    <p className="text-sm text-gray-700">{inquiry.message}</p>
+                    <h4 className="font-semibold mb-2 text-[#F4F7F5]">Message</h4>
+                    <p className="text-sm text-[#F4F7F5]/80">{inquiry.message}</p>
                   </div>
+
+                  {/* Payment Screenshot Section */}
+                  {inquiry.paymentScreenshot && (
+                    <div className="p-4 rounded-lg bg-[#1A1D21] border border-[#1F2329]">
+                      <h4 className="font-semibold mb-3 text-[#F4F7F5]">Payment Proof</h4>
+                      <div className="space-y-3">
+                        <div className="space-y-2 text-sm">
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <span className="text-[#F4F7F5]/70">Payment Method:</span>
+                              <p className="font-semibold text-[#008CE2] uppercase">{inquiry.paymentMethod}</p>
+                            </div>
+                            <div>
+                              <span className="text-[#F4F7F5]/70">Transaction ID:</span>
+                              <p className="font-mono text-[#F4F7F5]">{inquiry.transactionId}</p>
+                            </div>
+                          </div>
+                          {inquiry.paymentScreenshot && (
+                            <div>
+                              <span className="text-[#F4F7F5]/70">Screenshot URL:</span>
+                              <p className="text-[#008CE2] text-xs break-all">{inquiry.paymentScreenshot}</p>
+                            </div>
+                          )}
+                        </div>
+                        <div className="relative aspect-video bg-black/50 rounded-lg overflow-hidden border border-[#1F2329]">
+                          <img 
+                            src={inquiry.paymentScreenshot} 
+                            alt="Payment Screenshot" 
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                              console.error('Failed to load payment screenshot:', inquiry.paymentScreenshot)
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        </div>
+                        <Button
+                          onClick={() => window.open(inquiry.paymentScreenshot, '_blank')}
+                          className="w-full bg-[#008CE2] hover:bg-[#06B9D0] text-white"
+                        >
+                          <Eye className="h-4 w-4 mr-2" />
+                          Open Full Size
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
                   {inquiry.statusHistory && inquiry.statusHistory.length > 0 && (
                     <div>
-                      <h4 className="font-semibold mb-2">Status History</h4>
+                      <h4 className="font-semibold mb-2 text-[#F4F7F5]">Status History</h4>
                       <div className="space-y-2">
                         {inquiry.statusHistory.map((history, idx) => (
-                          <div key={idx} className="text-sm p-2 rounded bg-gray-50">
-                            <p className="font-semibold">{history.status.toUpperCase().replace('-', ' ')}</p>
-                            <p className="text-xs text-gray-600">
+                          <div key={idx} className="text-sm p-3 rounded bg-[#1A1D21] border border-[#1F2329]">
+                            <p className="font-semibold text-[#F4F7F5]">{history.status.toUpperCase().replace('-', ' ')}</p>
+                            <p className="text-xs text-[#F4F7F5]/70">
                               by {history.changedBy} on {format(new Date(history.changedAt), 'PPp')}
                             </p>
-                            {history.note && <p className="text-xs text-gray-600 mt-1">{history.note}</p>}
+                            {history.note && <p className="text-xs text-[#F4F7F5]/70 mt-1">{history.note}</p>}
                           </div>
                         ))}
                       </div>
@@ -384,7 +448,7 @@ export default function AdminInquiriesPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {inquiries.map((inquiry) => (
-            <InquiryCard key={inquiry._id} inquiry={inquiry} />
+            <InquiryCard key={`${inquiry._id}-${inquiry.updatedAt || inquiry.paymentScreenshot || 'initial'}`} inquiry={inquiry} />
           ))}
         </div>
       )}

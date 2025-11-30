@@ -14,6 +14,9 @@ export interface IInquiry {
   totalAmount: string
   notes?: string
   adminNotes?: string
+  paymentScreenshot?: string
+  paymentMethod?: 'bkash' | 'nagad' | 'bank' | 'other'
+  transactionId?: string
   createdAt?: Date
   updatedAt?: Date
   statusHistory?: Array<{
@@ -73,6 +76,16 @@ const InquirySchema = new mongoose.Schema(
     adminNotes: {
       type: String,
     },
+    paymentScreenshot: {
+      type: String,
+    },
+    paymentMethod: {
+      type: String,
+      enum: ['bkash', 'nagad', 'bank', 'other'],
+    },
+    transactionId: {
+      type: String,
+    },
     statusHistory: [
       {
         status: String,
@@ -97,4 +110,9 @@ InquirySchema.pre('save', async function (next) {
   next()
 })
 
-export default mongoose.models.Inquiry || mongoose.model<IInquiry>('Inquiry', InquirySchema)
+// Delete the cached model to ensure schema changes are picked up
+if (mongoose.models.Inquiry) {
+  delete mongoose.models.Inquiry
+}
+
+export default mongoose.model<IInquiry>('Inquiry', InquirySchema)

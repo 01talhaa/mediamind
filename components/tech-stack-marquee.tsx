@@ -7,57 +7,57 @@ import Image from "next/image"
 export function TechStackMarquee() {
   const [pausedRow, setPausedRow] = useState<string | null>(null)
 
-  // Technology stack data with icons
+  // Social Media Platforms and Tools
   const frontendTech = [
-    { name: "React", icon: "⚛️", color: "text-cyan-400" },
-    { name: "Next.js", icon: "▲", color: "text-white" },
-    { name: "Vue.js", icon: "V", color: "text-green-400", bg: "bg-green-500/20" },
-    { name: "Angular", icon: "A", color: "text-red-400", bg: "bg-red-500/20" },
-    { name: "TypeScript", icon: "TS", color: "text-blue-400", bg: "bg-blue-500/20" },
-    { name: "Tailwind CSS", icon: "🎨", color: "text-cyan-400" },
-    { name: "Flutter", icon: "◆", color: "text-blue-400" },
-    { name: "React Native", icon: "📱", color: "text-cyan-400" },
-    { name: "Three.js", icon: "3D", color: "text-white", bg: "bg-purple-500/20" },
-    { name: "WebGL", icon: "🎮", color: "text-orange-400" },
+    { name: "Instagram", icon: "📷", color: "text-pink-400" },
+    { name: "Facebook", icon: "👥", color: "text-blue-400" },
+    { name: "YouTube", icon: "▶️", color: "text-red-400" },
+    { name: "TikTok", icon: "🎵", color: "text-white", bg: "bg-gradient-to-r from-pink-500/20 to-cyan-500/20" },
+    { name: "Twitter/X", icon: "🐦", color: "text-sky-400" },
+    { name: "LinkedIn", icon: "💼", color: "text-blue-400", bg: "bg-blue-500/20" },
+    { name: "Pinterest", icon: "📌", color: "text-red-400" },
+    { name: "Snapchat", icon: "👻", color: "text-yellow-400" },
+    { name: "Threads", icon: "🧵", color: "text-white", bg: "bg-purple-500/20" },
+    { name: "WhatsApp", icon: "💬", color: "text-green-400" },
   ]
 
   const backendTech = [
-    { name: "Node.js", icon: "◉", color: "text-green-400" },
-    { name: "Python", icon: "🐍", color: "text-yellow-400" },
-    { name: "Laravel", icon: "L", color: "text-red-400", bg: "bg-red-500/20" },
-    { name: "Django", icon: "D", color: "text-green-400", bg: "bg-green-500/20" },
-    { name: "Express", icon: "E", color: "text-white", bg: "bg-gray-500/20" },
-    { name: "PostgreSQL", icon: "🐘", color: "text-blue-400" },
-    { name: "MongoDB", icon: "🍃", color: "text-green-400" },
-    { name: "Redis", icon: "◆", color: "text-red-400" },
-    { name: "Docker", icon: "🐳", color: "text-blue-400" },
-    { name: "Kubernetes", icon: "☸", color: "text-blue-400" },
+    { name: "Followers", icon: "👥", color: "text-blue-400" },
+    { name: "Likes", icon: "❤️", color: "text-red-400" },
+    { name: "Comments", icon: "💬", color: "text-green-400" },
+    { name: "Shares", icon: "📤", color: "text-purple-400" },
+    { name: "Views", icon: "👁️", color: "text-cyan-400" },
+    { name: "Engagement", icon: "📊", color: "text-orange-400" },
+    { name: "Reach", icon: "📡", color: "text-pink-400" },
+    { name: "Impressions", icon: "👀", color: "text-yellow-400" },
+    { name: "Stories", icon: "📸", color: "text-purple-400" },
+    { name: "Reels", icon: "🎬", color: "text-pink-400" },
   ]
 
   const cloudAndTools = [
-    { name: "AWS", icon: "☁️", color: "text-orange-400" },
-    { name: "Firebase", icon: "🔥", color: "text-yellow-400" },
-    { name: "Vercel", icon: "▲", color: "text-white" },
-    { name: "Git", icon: "⌥", color: "text-orange-400" },
-    { name: "GitHub", icon: "🐙", color: "text-white" },
-    { name: "Electron", icon: "e⁻", color: "text-cyan-400" },
-    { name: "GraphQL", icon: "◈", color: "text-pink-400" },
-    { name: "REST API", icon: "{}⟷", color: "text-green-400" },
-    { name: "Stripe", icon: "💳", color: "text-purple-400" },
-    { name: "WebXR", icon: "🥽", color: "text-blue-400" },
+    { name: "Analytics", icon: "📈", color: "text-green-400" },
+    { name: "Scheduling", icon: "⏰", color: "text-blue-400" },
+    { name: "Hashtags", icon: "#️⃣", color: "text-cyan-400" },
+    { name: "Content", icon: "📝", color: "text-orange-400" },
+    { name: "Targeting", icon: "🎯", color: "text-red-400" },
+    { name: "Viral Growth", icon: "🚀", color: "text-purple-400" },
+    { name: "Influencer", icon: "⭐", color: "text-yellow-400" },
+    { name: "Branding", icon: "🏷️", color: "text-pink-400" },
+    { name: "Community", icon: "👫", color: "text-green-400" },
+    { name: "Trends", icon: "📊", color: "text-blue-400" },
   ]
 
   const creativeTools = [
-    { name: "Adobe Premiere", icon: "Pr", color: "text-purple-400", bg: "bg-purple-500/20" },
-    { name: "After Effects", icon: "Ae", color: "text-purple-400", bg: "bg-purple-500/20" },
-    { name: "Photoshop", icon: "Ps", color: "text-blue-400", bg: "bg-blue-500/20" },
-    { name: "Illustrator", icon: "Ai", color: "text-orange-400", bg: "bg-orange-500/20" },
-    { name: "DaVinci Resolve", icon: "🎬", color: "text-red-400" },
-    { name: "Final Cut Pro", icon: "✂️", color: "text-blue-400" },
-    { name: "Blender", icon: "🌀", color: "text-orange-400" },
-    { name: "Cinema 4D", icon: "C4D", color: "text-blue-400", bg: "bg-blue-500/20" },
-    { name: "Figma", icon: "F", color: "text-purple-400", bg: "bg-purple-500/20" },
-    { name: "Canva", icon: "🎨", color: "text-cyan-400" },
+    { name: "Organic Growth", icon: "🌱", color: "text-green-400" },
+    { name: "Paid Ads", icon: "💰", color: "text-yellow-400" },
+    { name: "Influencer Marketing", icon: "🌟", color: "text-purple-400" },
+    { name: "Content Strategy", icon: "📋", color: "text-blue-400" },
+    { name: "SEO Optimization", icon: "🔍", color: "text-orange-400" },
+    { name: "Viral Campaigns", icon: "🔥", color: "text-red-400" },
+    { name: "Brand Building", icon: "🏗️", color: "text-cyan-400" },
+    { name: "Audience Research", icon: "🔬", color: "text-pink-400" },
+    { name: "A/B Testing", icon: "🧪", color: "text-green-400" },
+    { name: "ROI Tracking", icon: "💹", color: "text-blue-400" },
   ]
 
   const TechCard = ({ tech, rowId }: { tech: any; rowId: string }) => (
@@ -87,13 +87,13 @@ export function TechStackMarquee() {
         {/* Header */}
 <div className="flex items-center justify-between mb-12 flex-col sm:flex-row sm:items-center">
   <div className="text-center w-full"> {/* Added text-center and w-full */}
-    <h2 className="text-4xl font-extrabold tracking-tight text-[#F4F7F5] sm:text-5xl animate-fade-in-up"> {/* Removed text-center sm:text-left */}
-      Our <span className="text-sky-500">Technology</span>
+    <h2 className="text-4xl font-extrabold tracking-tight text-[#F4F7F5] sm:text-5xl animate-fade-in-up">
+      Our <span className="text-sky-500">Social Media</span>
       <br />
-      Stack
+      Expertise
     </h2>
-    <p className="mt-3 text-sm sm:text-base text-[#F4F7F5]/80 max-w-xl mx-auto"> {/* Added mx-auto */}
-      We combine cutting-edge development tools with professional creative software for complete digital solutions
+    <p className="mt-3 text-sm sm:text-base text-[#F4F7F5]/80 max-w-xl mx-auto">
+      We dominate every major social platform with proven growth strategies and authentic engagement
     </p>
   </div>
 </div>
@@ -102,7 +102,7 @@ export function TechStackMarquee() {
         <div className="relative">
           {/* First Row - Frontend Technologies */}
           <div className="mb-2">
-            <div className="text-xs font-semibold text-[#008CE2] mb-3 pl-3">FRONTEND & MOBILE</div>
+            <div className="text-xs font-semibold text-[#008CE2] mb-3 pl-3">SOCIAL PLATFORMS</div>
             <div className="flex overflow-hidden mb-8 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div
                 className={`flex animate-scroll-right whitespace-nowrap`}
@@ -121,7 +121,7 @@ export function TechStackMarquee() {
 
           {/* Second Row - Backend Technologies */}
           <div className="mb-2">
-            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">BACKEND & DATABASE</div>
+            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">ENGAGEMENT METRICS</div>
             <div className="flex overflow-hidden mb-8 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div
                 className={`flex animate-scroll-left whitespace-nowrap`}
@@ -140,7 +140,7 @@ export function TechStackMarquee() {
 
           {/* Third Row - Cloud & Tools */}
           <div className="mb-2">
-            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">CLOUD & DEVOPS</div>
+            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">GROWTH TOOLS</div>
             <div className="flex overflow-hidden mb-8 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div
                 className={`flex animate-scroll-right whitespace-nowrap`}
@@ -159,7 +159,7 @@ export function TechStackMarquee() {
 
           {/* Fourth Row - Creative & Editing Tools */}
           <div className="mb-2">
-            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">CREATIVE & EDITING</div>
+            <div className="text-xs font-semibold text-sky-600 mb-3 pl-3">GROWTH STRATEGIES</div>
             <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div
                 className={`flex animate-scroll-left whitespace-nowrap`}
@@ -180,20 +180,20 @@ export function TechStackMarquee() {
         {/* Stats Section */}
         <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6">
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-[#008CE2]">40+</div>
-            <div className="text-xs sm:text-sm text-[#F4F7F5]/70 mt-1">Technologies</div>
+            <div className="text-3xl sm:text-4xl font-bold text-[#008CE2]">10+</div>
+            <div className="text-xs sm:text-sm text-[#F4F7F5]/70 mt-1">Social Platforms</div>
           </div>
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-[#008CE2]">100%</div>
-            <div className="text-xs sm:text-sm text-gray-600 mt-1">Modern Stack</div>
+            <div className="text-xs sm:text-sm text-[#F4F7F5]/70 mt-1">Real Engagement</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-sky-500">5+</div>
-            <div className="text-xs sm:text-sm text-gray-600 mt-1">Years Experience</div>
+            <div className="text-3xl sm:text-4xl font-bold text-sky-500">50K+</div>
+            <div className="text-xs sm:text-sm text-[#F4F7F5]/70 mt-1">Happy Clients</div>
           </div>
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-sky-500">24/7</div>
-            <div className="text-xs sm:text-sm text-gray-600 mt-1">Support Available</div>
+            <div className="text-xs sm:text-sm text-[#F4F7F5]/70 mt-1">Support Available</div>
           </div>
         </div>
       </div>

@@ -127,11 +127,11 @@ export default function ClientDashboard() {
       <header className="border-b border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm shadow-[#008CE2]/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
-                      <Link href="/" className="flex items-center gap-1.5 hover:scale-105 transition-transform duration-300">
+                      <Link href="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
             <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
-            <span className="font-semibold tracking-wide">
-              <span className="text-[#008CE2]">Pixel</span>
-              <span className="text-[#F4F7F5]">Primp</span>
+            <span className="font-bold tracking-wide text-xl">
+              <span className="text-[#008CE2]">Media</span>
+              <span className="text-[#F4F7F5]">Mind</span>
             </span>
           </Link>
             
@@ -220,7 +220,7 @@ export default function ClientDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projects.map((project) => (
                 <Link key={project.id} href={`/projects/${project.id}`}>
-                  <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 hover:shadow-xl hover:shadow-sky-200/40 transition-all cursor-pointer">
+                  <Card className="border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20 hover:shadow-xl hover:shadow-[#06B9D0]/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
                     {project.images?.[0] && (
                       <div className="relative h-48 overflow-hidden rounded-t-lg">
                         <Image
@@ -241,10 +241,10 @@ export default function ClientDashboard() {
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                             project.status === "Completed"
-                              ? "bg-green-100 text-green-700"
+                              ? "bg-green-500/20 text-green-400 border border-green-500/30"
                               : project.status === "In Progress"
-                                ? "bg-sky-100 text-sky-700"
-                                : "bg-gray-100 text-gray-700"
+                                ? "bg-[#008CE2]/20 text-[#008CE2] border border-[#008CE2]/30"
+                                : "bg-[#F4F7F5]/10 text-[#F4F7F5]/70 border border-[#F4F7F5]/20"
                           }`}
                         >
                           {project.status}

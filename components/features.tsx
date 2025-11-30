@@ -48,25 +48,19 @@ export function Features() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-sky-200">
-                <Image
-                  src="/images/intuitive-1.png"
-                  alt="Close-up smartphone camera module on textured leather back"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 240px, 45vw"
-                  priority={false}
-                />
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-[#008CE2]/30 bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center">
+                <div className="text-center p-4">
+                  <div className="text-5xl mb-2">📱</div>
+                  <p className="text-sm text-[#F4F7F5]/80 font-semibold">Instagram Growth</p>
+                  <p className="text-xs text-[#F4F7F5]/60 mt-1">Real Followers</p>
+                </div>
               </div>
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/10">
-                <Image
-                  src="/images/intuitive-2.png"
-                  alt="Hand gripping textured phone back — macro detail"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 240px, 45vw"
-                  priority={false}
-                />
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-[#008CE2]/30 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
+                <div className="text-center p-4">
+                  <div className="text-5xl mb-2">▶️</div>
+                  <p className="text-sm text-[#F4F7F5]/80 font-semibold">YouTube Views</p>
+                  <p className="text-xs text-[#F4F7F5]/60 mt-1">High Retention</p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -90,20 +84,20 @@ export function Features() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Image
-                src={"/images/top-rated-1.png"}
-                width={280}
-                height={160}
-                alt="Product sketch concepts of backpack on paper"
-                className="h-full w-full rounded-xl border border-white/10 object-cover"
-              />
-              <Image
-                src={"/images/top-rated-2.png"}
-                width={280}
-                height={160}
-                alt="Backpacks on stage with Smartpack PRO lighting"
-                className="h-full w-full rounded-xl border border-white/10 object-cover"
-              />
+              <div className="relative aspect-video overflow-hidden rounded-xl border border-[#008CE2]/30 bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                <div className="text-center p-3">
+                  <div className="text-4xl mb-2">🎵</div>
+                  <p className="text-sm text-[#F4F7F5]/80 font-semibold">TikTok Viral</p>
+                  <p className="text-xs text-[#F4F7F5]/60 mt-1">10M+ Views</p>
+                </div>
+              </div>
+              <div className="relative aspect-video overflow-hidden rounded-xl border border-[#008CE2]/30 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center">
+                <div className="text-center p-3">
+                  <div className="text-4xl mb-2">👍</div>
+                  <p className="text-sm text-[#F4F7F5]/80 font-semibold">Facebook Likes</p>
+                  <p className="text-xs text-[#F4F7F5]/60 mt-1">Real Engagement</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

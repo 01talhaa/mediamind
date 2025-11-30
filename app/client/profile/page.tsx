@@ -231,11 +231,11 @@ export default function ClientProfilePage() {
       <header className="border-b border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm shadow-[#008CE2]/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
-                      <Link href="/" className="flex items-center gap-1.5 hover:scale-105 transition-transform duration-300">
+                      <Link href="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
             <Image src="/mediamind-logo.svg" alt="MediaMind logo" width={32} height={32} className="h-8 w-auto" />
-            <span className="font-semibold tracking-wide">
-              <span className="text-[#008CE2]">Pixel</span>
-              <span className="text-[#F4F7F5]">Primp</span>
+            <span className="font-bold tracking-wide text-xl">
+              <span className="text-[#008CE2]">Media</span>
+              <span className="text-[#F4F7F5]">Mind</span>
             </span>
           </Link>
             <Link

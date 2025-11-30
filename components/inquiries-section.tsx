@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { fetchWithAuth } from "@/lib/client-auth"
-import { Loader2, FileText, Clock, CheckCircle, XCircle, DollarSign, Eye, Download } from "lucide-react"
+import { Loader2, FileText, Clock, CheckCircle, XCircle, DollarSign, Eye, Download, RefreshCw } from "lucide-react"
 import Link from "next/link"
 import {
   Dialog,
@@ -28,6 +28,9 @@ interface Inquiry {
   paymentStatus: string
   invoiceNumber: string
   totalAmount: string
+  paymentScreenshot?: string
+  paymentMethod?: 'bkash' | 'nagad' | 'bank' | 'other'
+  transactionId?: string
   createdAt: string
   updatedAt: string
   statusHistory?: Array<{
@@ -62,13 +65,11 @@ export function InquiriesSection() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [viewingImage, setViewingImage] = useState<string | null>(null)
 
   useEffect(() => {
     loadInquiries()
-    
-    // Poll for updates every 30 seconds
-    const interval = setInterval(loadInquiries, 30000)
-    return () => clearInterval(interval)
   }, [])
 
   const loadInquiries = async () => {
@@ -76,12 +77,135 @@ export function InquiriesSection() {
       const response = await fetchWithAuth('/api/inquiries')
       if (response.ok) {
         const data = await response.json()
+        console.log('Loaded inquiries from API:', data.length, 'inquiries')
+        // Log inquiries with payment screenshots
+        data.forEach((inq: Inquiry) => {
+          if (inq.paymentScreenshot) {
+            console.log(`✓ Inquiry ${inq.invoiceNumber} HAS payment screenshot:`, inq.paymentScreenshot)
+          } else {
+            console.log(`✗ Inquiry ${inq.invoiceNumber} NO payment screenshot`)
+          }
+        })
         setInquiries(data)
       }
     } catch (error) {
       console.error('Error loading inquiries:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handlePaymentUpload = async (inquiryId: string, file: File, paymentMethod: string, transactionId: string) => {
+    if (!file) return
+
+    // Validate file
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file")
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image size should be less than 5MB")
+      return
+    }
+
+    setUploading(true)
+    const formData = new FormData()
+    formData.append("file", file)
+
+    try {
+      // Upload to Cloudinary
+      console.log('Uploading file to Cloudinary...')
+      const uploadResponse = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      const uploadData = await uploadResponse.json()
+      console.log('Cloudinary upload response:', uploadData)
+      console.log('Upload response status:', uploadResponse.status)
+      console.log('Upload response ok:', uploadResponse.ok)
+      
+      if (!uploadResponse.ok) {
+        console.error('Upload failed with status:', uploadResponse.status)
+        throw new Error(uploadData.error || "Upload failed")
+      }
+
+      // Check both url and data array for the URL
+      const imageUrl = uploadData.url || (uploadData.data && uploadData.data[0])
+      console.log('Extracted image URL:', imageUrl)
+      console.log('Image URL type:', typeof imageUrl)
+      console.log('Image URL length:', imageUrl?.length)
+
+      if (!imageUrl || typeof imageUrl !== 'string') {
+        console.error('Invalid URL. Full response:', uploadData)
+        throw new Error("No valid URL received from upload")
+      }
+
+      // Validate payment method and transaction ID
+      if (!paymentMethod || paymentMethod.trim() === '') {
+        throw new Error("Payment method is required")
+      }
+      if (!transactionId || transactionId.trim() === '') {
+        throw new Error("Transaction ID is required")
+      }
+
+      // Update inquiry with payment screenshot
+      const updatePayload = {
+        paymentScreenshot: imageUrl.trim(),
+        paymentMethod: paymentMethod.trim(),
+        transactionId: transactionId.trim(),
+      }
+      console.log('✓ Sending update to API with payload:', updatePayload)
+      console.log('✓ Payload JSON:', JSON.stringify(updatePayload))
+
+      const updateResponse = await fetchWithAuth(`/api/inquiries/${inquiryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatePayload),
+      })
+
+      console.log('Update response status:', updateResponse.status)
+      console.log('Update response ok:', updateResponse.ok)
+
+      if (updateResponse.ok) {
+        const updatedInquiry = await updateResponse.json()
+        console.log('✓ Updated inquiry from API:', updatedInquiry)
+        console.log('✓ Payment screenshot in response:', updatedInquiry.paymentScreenshot)
+        console.log('✓ Payment method in response:', updatedInquiry.paymentMethod)
+        console.log('✓ Transaction ID in response:', updatedInquiry.transactionId)
+        
+        // Update the inquiry in state immediately
+        setInquiries(prev => {
+          const updated = prev.map(inq => 
+            inq._id === inquiryId ? updatedInquiry : inq
+          )
+          console.log('✓ Updated inquiries state. Finding inquiry:', inquiryId)
+          const found = updated.find(inq => inq._id === inquiryId)
+          console.log('✓ Found inquiry after update:', {
+            hasScreenshot: !!found?.paymentScreenshot,
+            screenshotUrl: found?.paymentScreenshot
+          })
+          return updated
+        })
+        
+        alert("✓ Payment screenshot uploaded successfully! Close and reopen the dialog to see it.")
+        
+        // Also reload to ensure sync
+        await loadInquiries()
+      } else {
+        const errorData = await updateResponse.json().catch(() => ({ error: 'Unknown error' }))
+        console.error('Update failed with status:', updateResponse.status)
+        console.error('Error data:', errorData)
+        throw new Error(errorData.error || "Failed to update inquiry")
+      }
+    } catch (error: any) {
+      console.error("Error uploading payment:", error)
+      alert(error.message || "Failed to upload payment screenshot")
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -234,28 +358,79 @@ export function InquiriesSection() {
     doc.save(`${inquiry.invoiceNumber}.pdf`)
   }
 
-  const InquiryDetailDialog = ({ inquiry }: { inquiry: Inquiry }) => {
+  const InquiryDetailDialog = ({ inquiry: initialInquiry }: { inquiry: Inquiry }) => {
+    // Get current inquiry from state to ensure we show latest data
+    const inquiry = inquiries.find(inq => inq._id === initialInquiry._id) || initialInquiry
     const StatusIcon = statusIcons[inquiry.status] || Clock
+    const [refreshing, setRefreshing] = useState(false)
+
+    // Debug logging
+    useEffect(() => {
+      console.log('=== DIALOG INQUIRY DEBUG ===')
+      console.log('Initial inquiry ID:', initialInquiry._id)
+      console.log('Initial inquiry has screenshot:', !!initialInquiry.paymentScreenshot)
+      console.log('Current inquiries in state:', inquiries.length)
+      console.log('Found inquiry in state:', !!inquiries.find(inq => inq._id === initialInquiry._id))
+      
+      const foundInquiry = inquiries.find(inq => inq._id === initialInquiry._id)
+      if (foundInquiry) {
+        console.log('Found inquiry details:', {
+          id: foundInquiry._id,
+          hasScreenshot: !!foundInquiry.paymentScreenshot,
+          screenshotUrl: foundInquiry.paymentScreenshot,
+          paymentMethod: foundInquiry.paymentMethod,
+          transactionId: foundInquiry.transactionId
+        })
+      }
+      
+      console.log('Dialog showing inquiry:', {
+        id: inquiry._id,
+        hasScreenshot: !!inquiry.paymentScreenshot,
+        screenshotUrl: inquiry.paymentScreenshot,
+        paymentMethod: inquiry.paymentMethod,
+        transactionId: inquiry.transactionId
+      })
+      console.log('=========================')
+    }, [inquiry, inquiries, initialInquiry])
+
+    const handleRefresh = async () => {
+      setRefreshing(true)
+      await loadInquiries()
+      setRefreshing(false)
+    }
 
     return (
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0F1113] border-[#1F2329]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-3">
-            <FileText className="h-6 w-6 text-sky-500" />
-            Invoice Details
-          </DialogTitle>
-          <DialogDescription>
-            Complete information about your service inquiry and invoice
-          </DialogDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <DialogTitle className="flex items-center gap-3 text-[#F4F7F5]">
+                <FileText className="h-6 w-6 text-[#008CE2]" />
+                Invoice Details
+              </DialogTitle>
+              <DialogDescription className="text-[#F4F7F5]/70">
+                Complete information about your service inquiry and invoice
+              </DialogDescription>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="border-[#1F2329] bg-[#0F1113] text-[#F4F7F5] hover:bg-[#1A1D21] hover:border-[#008CE2]"
+            >
+              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+            </Button>
+          </div>
         </DialogHeader>
 
         <div className="space-y-6">
           {/* Invoice Header */}
-          <div className="p-6 rounded-lg bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200">
+          <div className="p-6 rounded-lg bg-gradient-to-br from-[#008CE2]/10 to-[#06B9D0]/10 border border-[#008CE2]/30">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-gray-600">Invoice Number</p>
-                <p className="text-2xl font-bold text-black">{inquiry.invoiceNumber}</p>
+                <p className="text-sm font-medium text-[#F4F7F5]/70">Invoice Number</p>
+                <p className="text-2xl font-bold text-[#F4F7F5]">{inquiry.invoiceNumber}</p>
               </div>
               <Badge className={statusColors[inquiry.status]}>
                 <StatusIcon className={`h-3 w-3 mr-1 ${inquiry.status === 'in-progress' ? 'animate-spin' : ''}`} />
@@ -264,14 +439,14 @@ export function InquiriesSection() {
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-gray-600">Created Date</p>
-                <p className="font-semibold text-black">
+                <p className="text-[#F4F7F5]/70">Created Date</p>
+                <p className="font-semibold text-[#F4F7F5]">
                   {format(new Date(inquiry.createdAt), 'PPP')}
                 </p>
               </div>
               <div>
-                <p className="text-gray-600">Last Updated</p>
-                <p className="font-semibold text-black">
+                <p className="text-[#F4F7F5]/70">Last Updated</p>
+                <p className="font-semibold text-[#F4F7F5]">
                   {format(new Date(inquiry.updatedAt), 'PPP')}
                 </p>
               </div>
@@ -280,25 +455,25 @@ export function InquiriesSection() {
 
           {/* Service Details */}
           <div>
-            <h3 className="font-semibold text-black mb-3">Service Details</h3>
+            <h3 className="font-semibold text-[#F4F7F5] mb-3">Service Details</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Service:</span>
-                <span className="font-semibold text-black">{inquiry.serviceName}</span>
+                <span className="text-[#F4F7F5]/70">Service:</span>
+                <span className="font-semibold text-[#F4F7F5]">{inquiry.serviceName}</span>
               </div>
               {inquiry.packageName && (
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Package:</span>
-                  <span className="font-semibold text-black">{inquiry.packageName}</span>
+                  <span className="text-[#F4F7F5]/70">Package:</span>
+                  <span className="font-semibold text-[#F4F7F5]">{inquiry.packageName}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-gray-600">Total Amount:</span>
-                <span className="font-bold text-sky-600 text-lg">{inquiry.totalAmount}</span>
+                <span className="text-[#F4F7F5]/70">Total Amount:</span>
+                <span className="font-bold text-[#008CE2] text-lg">{inquiry.totalAmount}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Payment Status:</span>
-                <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'}>
+                <span className="text-[#F4F7F5]/70">Payment Status:</span>
+                <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'} className={inquiry.paymentStatus === 'paid' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-[#F4F7F5]/10 text-[#F4F7F5]/70 border border-[#F4F7F5]/20'}>
                   {inquiry.paymentStatus.toUpperCase()}
                 </Badge>
               </div>
@@ -307,8 +482,8 @@ export function InquiriesSection() {
 
           {/* Project Details */}
           <div>
-            <h3 className="font-semibold text-black mb-3">Your Message</h3>
-            <p className="text-sm text-gray-700 p-4 rounded-lg bg-gray-50 border border-gray-200">
+            <h3 className="font-semibold text-[#F4F7F5] mb-3">Your Message</h3>
+            <p className="text-sm text-[#F4F7F5]/80 p-4 rounded-lg bg-[#1A1D21] border border-[#1F2329]">
               {inquiry.message}
             </p>
           </div>
@@ -316,34 +491,156 @@ export function InquiriesSection() {
           {/* Admin Notes */}
           {inquiry.adminNotes && (
             <div>
-              <h3 className="font-semibold text-black mb-3">Admin Notes</h3>
-              <p className="text-sm text-gray-700 p-4 rounded-lg bg-blue-50 border border-blue-200">
+              <h3 className="font-semibold text-[#F4F7F5] mb-3">Admin Notes</h3>
+              <p className="text-sm text-[#F4F7F5]/80 p-4 rounded-lg bg-[#008CE2]/10 border border-[#008CE2]/30">
                 {inquiry.adminNotes}
               </p>
             </div>
           )}
 
+          {/* Payment Information */}
+          <div className="p-6 rounded-lg bg-[#1A1D21] border border-[#1F2329]">
+            <h3 className="font-semibold text-[#F4F7F5] mb-4 flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-[#008CE2]" />
+              Payment Information
+            </h3>
+            
+            {/* Payment Numbers */}
+            <div className="mb-4 p-4 rounded-lg bg-[#0F1113] border border-[#1F2329]">
+              <p className="text-sm text-[#F4F7F5]/70 mb-3">Send payment to:</p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between p-2 bg-[#008CE2]/10 rounded border border-[#008CE2]/30">
+                  <span className="font-semibold text-[#F4F7F5]">bKash</span>
+                  <span className="text-[#008CE2] font-mono">+880 1401-658685</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-[#06B9D0]/10 rounded border border-[#06B9D0]/30">
+                  <span className="font-semibold text-[#F4F7F5]">Nagad</span>
+                  <span className="text-[#06B9D0] font-mono">+880 1401-658685</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Upload Section */}
+            {(() => {
+              console.log('Payment section check:', {
+                hasScreenshot: !!inquiry.paymentScreenshot,
+                screenshotUrl: inquiry.paymentScreenshot
+              })
+              return !inquiry.paymentScreenshot
+            })() ? (
+              <div className="space-y-3">
+                <label className="block">
+                  <span className="text-sm text-[#F4F7F5]/70 mb-2 block">Payment Method:</span>
+                  <select
+                    id={`payment-method-${inquiry._id}`}
+                    className="w-full p-2 rounded bg-[#0F1113] border border-[#1F2329] text-[#F4F7F5] text-sm"
+                    defaultValue="bkash"
+                  >
+                    <option value="bkash">bKash</option>
+                    <option value="nagad">Nagad</option>
+                    <option value="bank">Bank Transfer</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+
+                <label className="block">
+                  <span className="text-sm text-[#F4F7F5]/70 mb-2 block">Transaction ID:</span>
+                  <input
+                    type="text"
+                    id={`transaction-id-${inquiry._id}`}
+                    placeholder="Enter transaction ID"
+                    className="w-full p-2 rounded bg-[#0F1113] border border-[#1F2329] text-[#F4F7F5] text-sm placeholder:text-[#F4F7F5]/50"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-sm text-[#F4F7F5]/70 mb-2 block">Upload Payment Screenshot:</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id={`payment-upload-${inquiry._id}`}
+                    className="w-full p-2 rounded bg-[#0F1113] border border-[#1F2329] text-[#F4F7F5] text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#008CE2] file:text-white file:cursor-pointer hover:file:bg-[#06B9D0]"
+                    disabled={uploading}
+                  />
+                  <p className="text-xs text-[#F4F7F5]/50 mt-1">Max size: 5MB (JPG, PNG)</p>
+                </label>
+
+                <button
+                  onClick={() => {
+                    const fileInput = document.getElementById(`payment-upload-${inquiry._id}`) as HTMLInputElement
+                    const methodSelect = document.getElementById(`payment-method-${inquiry._id}`) as HTMLSelectElement
+                    const transactionInput = document.getElementById(`transaction-id-${inquiry._id}`) as HTMLInputElement
+                    
+                    if (fileInput?.files?.[0] && transactionInput.value) {
+                      handlePaymentUpload(inquiry._id, fileInput.files[0], methodSelect.value, transactionInput.value)
+                    } else {
+                      alert("Please select an image and enter transaction ID")
+                    }
+                  }}
+                  disabled={uploading}
+                  className="w-full py-2 px-4 bg-[#008CE2] hover:bg-[#06B9D0] text-white rounded font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {uploading ? 'Uploading...' : 'Upload Payment Proof'}
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
+                  <p className="text-sm text-green-400 font-semibold mb-2">✓ Payment screenshot uploaded</p>
+                  <div className="text-xs text-[#F4F7F5]/70 space-y-1">
+                    <p>Method: <span className="text-[#F4F7F5] font-semibold uppercase">{inquiry.paymentMethod}</span></p>
+                    <p>Transaction ID: <span className="text-[#F4F7F5] font-mono">{inquiry.transactionId}</span></p>
+                    {inquiry.paymentScreenshot && (
+                      <p className="break-all">URL: <span className="text-[#008CE2] text-[10px]">{inquiry.paymentScreenshot}</span></p>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Thumbnail Preview */}
+                <div className="relative aspect-video bg-black/50 rounded-lg overflow-hidden border border-[#1F2329]">
+                  <img 
+                    src={inquiry.paymentScreenshot} 
+                    alt="Payment Screenshot Preview" 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      console.error('Failed to load image:', inquiry.paymentScreenshot)
+                      e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImage Error%3C/text%3E%3C/svg%3E'
+                    }}
+                  />
+                </div>
+
+                <button
+                  onClick={() => setViewingImage(inquiry.paymentScreenshot!)}
+                  className="w-full py-2 px-4 bg-[#0F1113] hover:bg-[#1A1D21] border border-[#1F2329] hover:border-[#008CE2] text-[#F4F7F5] rounded font-semibold transition-all flex items-center justify-center gap-2"
+                >
+                  <Eye className="h-4 w-4" />
+                  View Full Size Screenshot
+                </button>
+              </div>
+            )}
+          </div>
+
           {/* Status History */}
           {inquiry.statusHistory && inquiry.statusHistory.length > 0 && (
             <div>
-              <h3 className="font-semibold text-black mb-3">Status History</h3>
+              <h3 className="font-semibold text-[#F4F7F5] mb-3">Status History</h3>
               <div className="space-y-3">
                 {inquiry.statusHistory.map((history, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-sm">
-                    <div className="h-8 w-8 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="h-4 w-4 text-sky-600" />
+                    <div className="h-8 w-8 rounded-full bg-[#008CE2]/20 flex items-center justify-center flex-shrink-0 border border-[#008CE2]/30">
+                      <CheckCircle className="h-4 w-4 text-[#008CE2]" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <p className="font-semibold text-black">
+                        <p className="font-semibold text-[#F4F7F5]">
                           {history.status.toUpperCase().replace('-', ' ')}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-[#F4F7F5]/50">
                           {format(new Date(history.changedAt), 'PPp')}
                         </p>
                       </div>
-                      <p className="text-xs text-gray-600">by {history.changedBy}</p>
-                      {history.note && <p className="text-xs text-gray-600 mt-1">{history.note}</p>}
+                      <p className="text-xs text-[#F4F7F5]/70">by {history.changedBy}</p>
+                      {history.note && <p className="text-xs text-[#F4F7F5]/70 mt-1">{history.note}</p>}
                     </div>
                   </div>
                 ))}
@@ -352,10 +649,10 @@ export function InquiriesSection() {
           )}
 
           {/* Download Button */}
-          <div className="pt-4 border-t border-gray-200">
+          <div className="pt-4 border-t border-[#1F2329]">
             <Button 
               onClick={() => downloadInvoice(inquiry)}
-              className="w-full bg-sky-500 hover:bg-sky-600 text-white"
+              className="w-full bg-[#008CE2] hover:bg-[#06B9D0] text-white"
             >
               <Download className="h-4 w-4 mr-2" />
               Download Invoice (PDF)
@@ -368,9 +665,9 @@ export function InquiriesSection() {
 
   if (loading) {
     return (
-      <Card>
+      <Card className="border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20">
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-sky-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#008CE2]" />
         </CardContent>
       </Card>
     )
@@ -378,14 +675,14 @@ export function InquiriesSection() {
 
   if (inquiries.length === 0) {
     return (
-      <Card>
+      <Card className="border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20">
         <CardHeader>
-          <CardTitle>Your Inquiries & Invoices</CardTitle>
+          <CardTitle className="text-[#F4F7F5]">Your Inquiries & Invoices</CardTitle>
         </CardHeader>
         <CardContent className="text-center py-12">
-          <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 mb-4">No inquiries yet</p>
-          <Button asChild>
+          <FileText className="h-12 w-12 text-[#F4F7F5]/30 mx-auto mb-4" />
+          <p className="text-[#F4F7F5]/70 mb-4">No inquiries yet</p>
+          <Button asChild className="bg-[#008CE2] text-white hover:bg-[#06B9D0] hover:scale-105 transition-all duration-300">
             <Link href="/services">Browse Services</Link>
           </Button>
         </CardContent>
@@ -394,69 +691,107 @@ export function InquiriesSection() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Your Inquiries & Invoices</span>
-          <Badge variant="secondary">{inquiries.length} Total</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {inquiries.map((inquiry) => {
-            const StatusIcon = statusIcons[inquiry.status] || Clock
-            
-            return (
-              <div
-                key={inquiry._id}
-                className="p-4 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors bg-white"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-black">{inquiry.serviceName}</h3>
-                      <Badge className={statusColors[inquiry.status]}>
-                        <StatusIcon className={`h-3 w-3 mr-1 ${inquiry.status === 'in-progress' ? 'animate-spin' : ''}`} />
-                        {inquiry.status.toUpperCase().replace('-', ' ')}
+    <>
+      <Card className="border-[#1F2329] bg-[#0F1113]/80 backdrop-blur-xl shadow-lg shadow-[#008CE2]/20">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between text-[#F4F7F5]">
+            <span>Your Inquiries & Invoices</span>
+            <Badge variant="secondary" className="bg-[#008CE2]/20 text-[#008CE2] border border-[#008CE2]/30">{inquiries.length} Total</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {inquiries.map((inquiry) => {
+              const StatusIcon = statusIcons[inquiry.status] || Clock
+              
+              return (
+                <div
+                  key={inquiry._id}
+                  className="p-4 rounded-lg border border-[#1F2329] hover:border-[#008CE2] transition-all duration-300 bg-[#1A1D21] hover:shadow-md hover:shadow-[#008CE2]/20"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-[#F4F7F5]">{inquiry.serviceName}</h3>
+                        <Badge className={statusColors[inquiry.status]}>
+                          <StatusIcon className={`h-3 w-3 mr-1 ${inquiry.status === 'in-progress' ? 'animate-spin' : ''}`} />
+                          {inquiry.status.toUpperCase().replace('-', ' ')}
+                        </Badge>
+                      </div>
+                      {inquiry.packageName && (
+                        <p className="text-sm text-[#F4F7F5]/70">{inquiry.packageName}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-lg font-bold text-[#008CE2]">{inquiry.totalAmount}</p>
+                      <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'} className={inquiry.paymentStatus === 'paid' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-[#F4F7F5]/10 text-[#F4F7F5]/70 border border-[#F4F7F5]/20'}>
+                        {inquiry.paymentStatus}
                       </Badge>
                     </div>
-                    {inquiry.packageName && (
-                      <p className="text-sm text-gray-600">{inquiry.packageName}</p>
-                    )}
                   </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-sky-600">{inquiry.totalAmount}</p>
-                    <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'} className="text-xs">
-                      {inquiry.paymentStatus}
-                    </Badge>
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between text-sm">
-                  <div className="space-y-1">
-                    <p className="text-gray-600">
-                      Invoice: <span className="font-mono font-semibold text-black">{inquiry.invoiceNumber}</span>
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {format(new Date(inquiry.createdAt), 'PPP')}
-                    </p>
-                  </div>
-                  
-                  <Dialog>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="space-y-1">
+                      <p className="text-[#F4F7F5]/70">
+                        Invoice: <span className="font-mono font-semibold text-[#F4F7F5]">{inquiry.invoiceNumber}</span>
+                      </p>
+                      <p className="text-xs text-[#F4F7F5]/50">
+                        {format(new Date(inquiry.createdAt), 'PPP')}
+                      </p>
+                    </div>
+                    
+                  <Dialog key={`dialog-${inquiry._id}-${inquiry.updatedAt || inquiry.paymentScreenshot || 'initial'}`}>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="border-[#1F2329] bg-[#0F1113] text-[#F4F7F5] hover:bg-[#1A1D21] hover:border-[#008CE2]">
                         <Eye className="h-4 w-4 mr-1" />
                         View Details
                       </Button>
                     </DialogTrigger>
                     <InquiryDetailDialog inquiry={inquiry} />
                   </Dialog>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
-      </CardContent>
-    </Card>
+              )
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Image Viewing Dialog */}
+      <Dialog open={!!viewingImage} onOpenChange={() => setViewingImage(null)}>
+        <DialogContent className="max-w-4xl bg-[#0F1113] border-[#1F2329]">
+          <DialogHeader>
+            <DialogTitle className="text-[#F4F7F5]">Payment Screenshot</DialogTitle>
+            <DialogDescription className="text-[#F4F7F5]/70">
+              View uploaded payment proof
+            </DialogDescription>
+          </DialogHeader>
+          <div className="relative aspect-video bg-black/50 rounded-lg overflow-hidden">
+            {viewingImage && (
+              <img 
+                src={viewingImage} 
+                alt="Payment Screenshot" 
+                className="w-full h-full object-contain"
+              />
+            )}
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              onClick={() => window.open(viewingImage!, '_blank')}
+              className="bg-[#008CE2] hover:bg-[#06B9D0] text-white"
+            >
+              Open in New Tab
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setViewingImage(null)}
+              className="border-[#1F2329] bg-[#0F1113] text-[#F4F7F5] hover:bg-[#1A1D21]"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

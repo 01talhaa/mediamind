@@ -24,6 +24,13 @@ export async function GET(request: NextRequest) {
       .sort({ createdAt: -1 })
       .lean()
 
+    // Log payment screenshots for debugging
+    inquiries.forEach(inq => {
+      if (inq.paymentScreenshot) {
+        console.log(`Inquiry ${inq._id} has payment screenshot: ${inq.paymentScreenshot}`)
+      }
+    })
+
     return NextResponse.json(inquiries)
   } catch (error: any) {
     console.error('Error fetching inquiries:', error)

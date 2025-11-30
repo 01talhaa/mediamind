@@ -414,12 +414,11 @@ export default async function ServicesPage() {
         <section className="container mx-auto px-4 py-16 sm:py-24 bg-gradient-to-b from-[#08090A] via-[#0F1113] to-[#08090A]">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl text-[#F4F7F5] animate-fade-in-up">
-              <span className="block">Premium Creative</span>
-              <span className="block text-[#008CE2] drop-shadow-[0_0_20px_rgba(0,140,226,0.5)]">Services</span>
+              <span className="block">Social Media</span>
+              <span className="block text-[#008CE2] drop-shadow-[0_0_20px_rgba(0,140,226,0.5)]">Growth Services</span>
             </h1>
             <p className="text-lg text-[#F4F7F5]/80 sm:text-xl animate-fade-in-up delay-100">
-              From concept to completion, we deliver world-class creative solutions that drive real results for your
-              business
+              Authentic followers, real engagement, and explosive growth across all platforms. We help brands and influencers dominate social media.
             </p>
           </div>
         </section>
@@ -493,8 +492,8 @@ export default async function ServicesPage() {
         {/* CTA Section */}
         <section className="container mx-auto px-4 pb-16 sm:pb-24 bg-gradient-to-b from-[#08090A] via-[#0F1113] to-[#08090A]">
           <Card className="liquid-glass-enhanced border border-[#1F2329] bg-[#0F1113]/90 backdrop-blur-xl text-center p-8 sm:p-12 shadow-lg shadow-[#008CE2]/40 animate-fade-in-up">
-            <h2 className="mb-4 text-3xl font-bold text-[#F4F7F5] sm:text-4xl">Ready to Start Your Project?</h2>
-            <p className="mb-8 text-lg text-[#F4F7F5]/80">Let's discuss how we can bring your vision to life</p>
+            <h2 className="mb-4 text-3xl font-bold text-[#F4F7F5] sm:text-4xl">Ready to Grow Your Social Media?</h2>
+            <p className="mb-8 text-lg text-[#F4F7F5]/80">Let's skyrocket your followers, engagement, and brand presence together</p>
             <Button
               asChild
               size="lg"
