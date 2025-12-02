@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import dbConnect from '@/lib/mongoose'
 import Inquiry from '@/lib/models/Inquiry'
+import Client from '@/lib/models/Client'
 
 // Verify admin credentials
 async function verifyAdmin(request: NextRequest) {
@@ -37,6 +38,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     await dbConnect()
 
+    // Ensure Client model is registered (needed for populate in production)
+    const ClientModel = Client
+
     const inquiry = await Inquiry.findById(id)
       .populate('clientId', 'name email phone company avatar')
       .lean()
@@ -65,6 +69,9 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const { status, paymentStatus, adminNotes, totalAmount, changedBy } = body
 
     await dbConnect()
+
+    // Ensure Client model is registered (needed for populate in production)
+    const ClientModel = Client
 
     const inquiry = await Inquiry.findById(id)
 
@@ -128,6 +135,9 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     }
 
     await dbConnect()
+
+    // Ensure Client model is registered (needed for populate in production)
+    const ClientModel = Client
 
     const inquiry = await Inquiry.findByIdAndDelete(id)
 

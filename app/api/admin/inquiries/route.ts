@@ -42,6 +42,9 @@ export async function GET(request: NextRequest) {
 
     await dbConnect()
 
+    // Ensure Client model is registered (needed for populate in production)
+    const ClientModel = Client
+
     const filter: any = {}
     if (status) filter.status = status
     if (clientId) filter.clientId = clientId
