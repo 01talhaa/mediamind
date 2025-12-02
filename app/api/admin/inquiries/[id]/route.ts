@@ -4,6 +4,13 @@ import Inquiry from '@/lib/models/Inquiry'
 
 // Verify admin credentials
 async function verifyAdmin(request: NextRequest) {
+  // Check for session cookie first (used after login)
+  const sessionCookie = request.cookies.get('admin-session')?.value
+  if (sessionCookie === 'authenticated') {
+    return true
+  }
+
+  // Fallback to Basic auth (for backwards compatibility)
   const authHeader = request.headers.get('authorization')
   if (!authHeader || !authHeader.startsWith('Basic ')) {
     return false

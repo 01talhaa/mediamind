@@ -5,6 +5,13 @@ import Client from '@/lib/models/Client'
 
 // Verify admin credentials
 async function verifyAdmin(request: NextRequest) {
+  // Check for session cookie first (used after login)
+  const sessionCookie = request.cookies.get('admin-session')?.value
+  if (sessionCookie === 'authenticated') {
+    return true
+  }
+
+  // Fallback to Basic auth (for backwards compatibility)
   const authHeader = request.headers.get('authorization')
   if (!authHeader || !authHeader.startsWith('Basic ')) {
     return false
@@ -25,6 +32,7 @@ export async function GET(request: NextRequest) {
   try {
     const isAdmin = await verifyAdmin(request)
     if (!isAdmin) {
+      console.error('Admin verification failed - No valid session or credentials')
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

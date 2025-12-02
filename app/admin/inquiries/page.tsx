@@ -112,19 +112,13 @@ export default function AdminInquiriesPage() {
   const loadInquiries = async () => {
     setLoading(true)
     try {
-      // Use the same credentials from environment that other admin pages use
-      const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
-      const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
-      const credentials = btoa(`${username}:${password}`)
-      
       const url = filterStatus && filterStatus !== "all" 
         ? `/api/admin/inquiries?status=${filterStatus}`
         : '/api/admin/inquiries'
       
+      // Cookies are automatically sent with fetch requests
       const response = await fetch(url, {
-        headers: {
-          'Authorization': `Basic ${credentials}`,
-        },
+        credentials: 'include', // Ensure cookies are sent
       })
 
       if (response.ok) {
@@ -157,15 +151,12 @@ export default function AdminInquiriesPage() {
     if (!editingInquiry) return
 
     try {
-      const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
-      const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
-      const credentials = btoa(`${username}:${password}`)
-      
+      // Cookies are automatically sent with fetch requests
       const response = await fetch(`/api/admin/inquiries/${editingInquiry._id}`, {
         method: 'PUT',
+        credentials: 'include', // Ensure cookies are sent
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Basic ${credentials}`,
         },
         body: JSON.stringify({
           ...editForm,
@@ -192,15 +183,10 @@ export default function AdminInquiriesPage() {
     if (!confirm('Are you sure you want to delete this inquiry?')) return
 
     try {
-      const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
-      const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
-      const credentials = btoa(`${username}:${password}`)
-      
+      // Cookies are automatically sent with fetch requests
       const response = await fetch(`/api/admin/inquiries/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Basic ${credentials}`,
-        },
+        credentials: 'include', // Ensure cookies are sent
       })
 
       if (!response.ok) {
